@@ -1,17 +1,24 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import { configViewEngine } from "./configs/viewEngine.js";
+
+import { authRouter } from "./routes/index.js";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server is running right");
-});
+// config view engine
+configViewEngine(app);
+
+// config req.body
+app.use(express.json()); // Used to parse JSON bodies
+app.use(express.urlencoded()); //Parse URL-encoded bodies
+
+// set up routers
+app.use("/api/v1/", authRouter);
 
 app.listen(port, () => {
-  console.log(
-    `⚡️[server]: Server is running at http://localhost:${port} is running`
-  );
+  console.log(`Example app listening on port ${port}`);
 });
