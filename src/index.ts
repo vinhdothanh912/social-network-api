@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import { configViewEngine } from "./configs/viewEngine.js";
+import { configViewEngine } from "./config/viewEngine.js";
 
 import { authRouter } from "./routes/index.js";
 

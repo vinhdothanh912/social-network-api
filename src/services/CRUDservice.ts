@@ -1,4 +1,4 @@
-import { connection } from "../configs/database.js";
+import { connection } from "../config/database.js";
 
 export const getAllUsersService = async () => {
   try {
@@ -26,8 +26,7 @@ export const createNewUserService = async (payload: {
       [email, name, city]
     );
 
-    console.log("@@results: ", results[0]);
-    return results;
+    return results[0];
   } catch (error) {
     return error;
   }
