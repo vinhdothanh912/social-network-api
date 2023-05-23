@@ -1,24 +1,16 @@
-import { connection } from "../config/database.js";
+const connection = require("../config/database");
 
-export const getAllUsersService = async () => {
-  try {
-    const results = await connection.query("SELECT * from Users");
+const getAllUsersService = async () => {
+  const [results, fields] = await connection.query("SELECT * from Users");
 
-    return results[0];
-  } catch (error) {
-    return error;
-  }
+  return results;
 };
 
-export const createNewUserService = async (payload: {
-  email: string;
-  name: string;
-  city: string;
-}) => {
+const createNewUserService = async (payload) => {
   try {
     const { email, name, city } = payload;
 
-    const results = await connection.query(
+    const [resulst] = await connection.query(
       `
     INSERT INTO Users (email, name , city) 
     VALUES(?, ?, ?)
@@ -26,14 +18,14 @@ export const createNewUserService = async (payload: {
       [email, name, city]
     );
 
-    return results[0];
+    return resulst;
   } catch (error) {
     return error;
   }
 };
 
-export const getUserByIdService = async (userId: string) => {
-  const results = await connection.query(
+const getUserById = async (userId) => {
+  const [results, fields] = await connection.query(
     `
     SELECT * from Users 
     WHERE id = ?
@@ -45,12 +37,7 @@ export const getUserByIdService = async (userId: string) => {
   return user;
 };
 
-export const updateUserService = async (payload: {
-  email: string;
-  name: string;
-  city: string;
-  userId: string;
-}) => {
+const updateUserService = async (payload) => {
   try {
     const { userId: id, email, name, city } = payload;
 
@@ -67,7 +54,7 @@ export const updateUserService = async (payload: {
   }
 };
 
-export const deleteUserByIdService = async (userId: string) => {
+const deleteUserServiceById = async (userId) => {
   await connection.query(
     `
     DELETE from Users 
@@ -75,4 +62,12 @@ export const deleteUserByIdService = async (userId: string) => {
     `,
     [userId]
   );
+};
+
+module.exports = {
+  getAllUsersService,
+  createNewUserService,
+  getUserById,
+  updateUserService,
+  deleteUserServiceById,
 };

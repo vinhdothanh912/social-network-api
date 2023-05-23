@@ -1,30 +1,27 @@
 {
-  "name": "social-media-api",
+  "name": "nodejs-basic",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the tutorial nodejs",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
   },
-  "type": "commonjs",
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "react"
+  ],
+  "author": "vinhdothanh",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "mysql2": "^3.3.1",
+    "dotenv": "16.0.3",
+    "ejs": "3.1.8",
+    "express": "4.18.2",
+    "mysql2": "2.3.3",
     "sequelize": "^6.31.1"
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.2.1",
-    "concurrently": "^8.0.1",
-    "nodemon": "^2.0.22",
-    "sequelize-cli": "^6.6.0",
-    "typescript": "^5.0.4"
+    "nodemon": "2.0.20",
+    "sequelize-cli": "^6.6.0"
   }
 }

@@ -1,7 +1,7 @@
-import express, { Express, Request, Response } from "express";
-import path from "path";
+const path = require("path");
+const express = require("express");
 
-const configViewEngine = (app: Express) => {
+const configViewEngine = (app) => {
   app.set("views", path.join("./src", "views"));
   app.set("view engine", "ejs");
 
@@ -9,4 +9,4 @@ const configViewEngine = (app: Express) => {
   app.use(express.static(path.join("./src", "public")));
 };
 
-export { configViewEngine };
+module.exports = configViewEngine;

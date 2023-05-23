@@ -1,12 +1,11 @@
-import { Request, Response } from "express";
-import {
-  createNewUserService,
-  deleteUserByIdService,
+const {
   getAllUsersService,
+  createNewUserService,
+  deleteUserServiceById,
   updateUserService,
-} from "../services/CRUDservice.js";
+} = require("../services/CRUDservices");
 
-export const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (req, res) => {
   try {
     const results = await getAllUsersService();
 
@@ -16,7 +15,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-export const createNewUser = async (req: Request, res: Response) => {
+const createNewUser = async (req, res) => {
   const { name, email, city } = req.body;
 
   try {
@@ -27,12 +26,12 @@ export const createNewUser = async (req: Request, res: Response) => {
     const newUser = await createNewUserService({ name, email, city });
 
     return res.status(200).json({ data: newUser });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req, res) => {
   const { name, email, city } = req.body;
   const { userId } = req.params;
 
@@ -44,12 +43,12 @@ export const updateUser = async (req: Request, res: Response) => {
     await updateUserService({ name, email, city, userId });
 
     return res.status(200).json({ id: userId });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+const deleteUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -57,10 +56,12 @@ export const deleteUser = async (req: Request, res: Response) => {
       throw new Error("missing userId in url");
     }
 
-    await deleteUserByIdService(userId);
+    await deleteUserServiceById(userId);
 
     return res.status(200).json({ id: userId });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
+
+module.exports = { getAllUsers, createNewUser, updateUser, deleteUser };
