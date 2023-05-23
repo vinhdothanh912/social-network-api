@@ -1,3 +1,5 @@
+const { stringify } = require("querystring");
+const db = require("../models");
 const {
   getAllUsersService,
   createNewUserService,
@@ -7,9 +9,10 @@ const {
 } = require("../services/CRUDservices");
 
 const getHomePage = async (req, res) => {
-  const results = await getAllUsersService();
-
-  return res.render("home.ejs", { listUsers: results });
+  // const results = await getAllUsersService();
+  const data = await db.User.findAll();
+  return res.send(JSON.stringify(data));
+  return res.render("home.ejs", { listUsers: JSON.stringify(data) });
 };
 
 const getNewPage = (req, res) => {
