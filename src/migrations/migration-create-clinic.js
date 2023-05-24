@@ -11,6 +11,9 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: uuidv4(),
       },
+      name: {
+        type: Sequelize.STRING,
+      },
       address: {
         type: Sequelize.STRING,
       },

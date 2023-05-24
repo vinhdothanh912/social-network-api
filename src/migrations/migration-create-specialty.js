@@ -11,12 +11,16 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: uuidv4(),
       },
-      description: {
-        type: Sequelize.TEXT,
+      name: {
+        type: Sequelize.STRING,
       },
       image: {
         type: Sequelize.STRING,
       },
+      description: {
+        type: Sequelize.TEXT,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
