@@ -1,7 +1,15 @@
+const { getAllUser } = require("../../services/home-service");
+
 const getHomePage = async (req, res) => {
-  const results = await getAllUsersService();
-  // const data = await db.User.findAll();
-  return res.render("home.ejs", { listUsers: JSON.stringify(results) });
+  try {
+    const results = await getAllUser();
+
+    // console.log("@@results: ", results);
+
+    return res.render("home.ejs", { listUsers: results });
+  } catch (error) {
+    return error;
+  }
 };
 
 module.exports = { getHomePage };
