@@ -9,9 +9,9 @@ const postCreateUser = async (req, res) => {
   try {
     const payload = req.body;
 
-    await createNewUser(payload);
+    const message = await createNewUser(payload);
 
-    return res.send("post create user");
+    return res.send(message);
   } catch (error) {
     return error;
   }

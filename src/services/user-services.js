@@ -1,4 +1,3 @@
-const connection = require("../config/database");
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const salt = bcrypt.genSaltSync(10);
@@ -15,13 +14,27 @@ const hashUserPassword = (password) => {
 };
 
 const createNewUser = async (payload) => {
-  try {
-    console.log("@@payload", payload);
-    const hashPassword = await hashUserPassword(payload.password);
-    console.log("@@hashPassword: ", hashPassword);
-  } catch (error) {
-    throw error;
-  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const hashPassword = await hashUserPassword(payload.password);
+      await db.User.create({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: payload.email,
+        password: hashPassword,
+        address: payload.address,
+        phoneNumber: payload.phoneNumber,
+        gender: payload.gender,
+        // image: payload.image,
+        roleId: payload.roleId,
+        positionId: payload.positionId,
+      });
+
+      resolve("Create new user succeed!");
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 module.exports = { createNewUser };
