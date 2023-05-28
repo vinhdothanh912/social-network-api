@@ -76,4 +76,18 @@ const updateUser = async (payload) => {
   });
 };
 
-module.exports = { createNewUser, getUserDataById, updateUser };
+const deleteUserById = async (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const userData = await db.User.destroy({
+        where: { id: userId },
+      });
+
+      resolve(userData);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+module.exports = { createNewUser, getUserDataById, updateUser, deleteUserById };

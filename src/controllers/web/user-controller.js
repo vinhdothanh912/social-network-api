@@ -2,6 +2,7 @@ const {
   createNewUser,
   getUserDataById,
   updateUser,
+  deleteUserById,
 } = require("../../services/user-services");
 
 const getCreateUserPage = (req, res) => {
@@ -36,14 +37,45 @@ const getEditUserPage = async (req, res) => {
   }
 };
 
-const putEditUser = async (req, res) => {
+const postEditUser = async (req, res) => {
   const userData = req.body;
   const userId = req.params.userId;
 
-  console.log("@@userId: ", userId);
   try {
     if (userData) {
       await updateUser({ ...userData, userId });
+
+      return res.redirect("/");
+    } else {
+      return res.send("User not found!");
+    }
+  } catch (error) {
+    return res.send(error);
+  }
+};
+
+const getDeleteUserPage = async (req, res) => {
+  const userId = req.params.userId;
+
+  if (userId) {
+    const userData = await getUserDataById(userId);
+
+    if (userData) {
+      return res.render("delete-user.ejs", { user: userData });
+    } else {
+      return res.send("User not found!");
+    }
+  } else {
+    return res.send("User not found!");
+  }
+};
+
+const postDeleteUser = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    if (userId) {
+      await deleteUserById(userId);
 
       return res.redirect("/");
     } else {
@@ -58,5 +90,7 @@ module.exports = {
   getCreateUserPage,
   postCreateUser,
   getEditUserPage,
-  putEditUser,
+  postEditUser,
+  getDeleteUserPage,
+  postDeleteUser,
 };
