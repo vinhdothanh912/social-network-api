@@ -1,23 +1,11 @@
 const db = require("../models");
-const bcrypt = require("bcrypt");
-const salt = bcrypt.genSaltSync(10);
 const { v4: uuidv4 } = require("uuid");
-
-const hashUserPassword = (password) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      hashPassword = await bcrypt.hash(password, salt);
-      resolve(hashPassword);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
+const { handleHashPassword } = require("./common-service");
 
 const createNewUser = async (payload) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const hashPassword = await hashUserPassword(payload.password);
+      const hashPassword = await handleHashPassword(payload.password);
       await db.User.create({
         id: uuidv4(),
         firstName: payload.firstName,

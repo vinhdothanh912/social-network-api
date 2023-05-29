@@ -1,10 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-
 const configViewEngine = require("./config/viewEngine");
-const webRoutes = require("./routes/web");
-const apiRoutes = require("./routes/api");
 const connectDB = require("./config/connectDB");
+const webRoutes = require("./routes/web");
+const { authRouter } = require("./routes/api");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -19,7 +18,8 @@ app.use(express.urlencoded()); //Parse URL-encoded bodies
 
 // set up routers
 app.use("/", webRoutes);
-app.use("/api/v1/", apiRoutes);
+// API routers
+app.use("/api/v1/auth", authRouter);
 
 connectDB();
 
